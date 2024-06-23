@@ -129,14 +129,14 @@ flowchart TD
 
 此时可以在 `data/{主机名}.err` 日志文件中查找关键字 `A temporary password` 得到初始密码:
 
-[](./imgs/06.jpg)
+![](./imgs/06.jpg)
 
 
 ### 0x42 初始化后本地连接无法通过权限检查
 
 我在刚开始做这 4 个脚本的时候发现，初始化后无论如何也无法登录进去，不管有密码还是没密码初始化，甚至 mysqladmin 超管也无法连接，一直报错 `ERROR 1130` （权限检查不通过）:
 
-[](./imgs/07.jpg)
+![](./imgs/07.jpg)
 
 查了 2 天才发现原因是我把用于 docker 的 mysql 配置项复制到 my.ini 了：
 
