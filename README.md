@@ -90,16 +90,16 @@ flowchart TD
 
 1. 检查 Mysql 服务是否已注册，若已注册不执行任何动作
 
-[](./imgs/01.jpg)
+![](./imgs/01.jpg)
 
 2. 检查 `data` 目录是否为空，若不为空则仅重新注册；若为空则进入初始化流程
 
-[](./imgs/02.jpg)
+![](./imgs/02.jpg)
 
 
 3. 用户交互：要求选择【数据库编码】
 
-[](./imgs/03.jpg)
+![](./imgs/03.jpg)
 
 
 4. 自动备份旧的 `my.ini` 配置
@@ -110,11 +110,11 @@ flowchart TD
 9. 用户交互：要求输入 root 用户【密码】
 10. 执行 `mysqladmin -u root password ${密码}` 设置 root 密码
 
-[](./imgs/04.jpg)
+![](./imgs/04.jpg)
 
 11. 随后任意终端或客户端，即可登录 Mysql
 
-[](./imgs/05.jpg)
+![](./imgs/05.jpg)
 
 
 
