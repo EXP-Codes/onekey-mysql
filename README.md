@@ -7,7 +7,7 @@
 
 由于 Mysql 一直都有着极为严格的登录权限校验、以致不少同学都会被卡在初始化的地方，极让人抓狂。
 
-在 [Mysql 官网下载](https://dev.mysql.com/downloads/mysql/) 绿色版的 zip 不过是想独立部署一个简单测试库进行验证，但 Mysql 不准 —— 你必须先处理各种弯弯绕绕的无关问题：
+很多时候在 [Mysql 官网下载](https://dev.mysql.com/downloads/mysql/) 绿色版的 zip ，目的不过是想独立部署一个简单测试库进行验证，但 Mysql 不准 —— 你必须先处理各种弯弯绕绕的无关问题：
 
 - 写配置项意义不明的配置文件： Mysql8 甚至不再提供模板
 - 找到 root 用户的密码： Mysql8 竟然是随机生成的还藏起来
