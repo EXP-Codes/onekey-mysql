@@ -26,7 +26,7 @@ if exist "%MYSQL_DIR%\data\ibdata1" (
     pause
     exit /b
 ) else (
-    :: 重新建库
+    :: 重新初始化
     echo Data directory is empty, init now ...
 )
 

@@ -28,7 +28,7 @@
 以下脚本需要确保 Mysql 的**解压路径为纯英文**，并且使用**管理员权限**运行：
 
 | 脚本 | 说明 | 关键词 |
-|:---:|:---|:---:|
+|:---|:---|:---:|
 | [_svcname](./win/_svcname) | Mysql 服务名称，被所有脚本读取 | 服务名称 |
 | [01_register.bat](./win/01_register.bat) | Mysql 服务注册脚本，用于初始化或迁移位置 | 初始化，迁移 |
 | [my.tpl.ini](./win/my.tpl.ini) | Mysql 配置文件模板，配合服务注册脚本使用 | 配置模板 |
@@ -66,6 +66,39 @@
 3. 执行 [`01_register.bat`](./win/01_register.bat) 脚本重新注册：
     - 此时因为检测到 data 目录已存在，并不会重新初始化
     - 但是会自动备份 my.ini 配置文件，然后根据新位置重新生成一个
+
+
+
+## 0x30 注册脚本解读
+
+这些脚本中，核心是注册脚本，这里为大家解读一下脚本逻辑：
+
+```
+flowchart TD
+    A[检查 Mysql 服务是否已注册] -->|已注册| B[不执行任何动作]
+    A -->|未注册| C[检查 data 目录是否为空]
+    C -->|不为空| D[重新注册 Mysql 服务]
+    C -->|为空| E[初始化流程]
+    E --> F[用户交互：选择数据库编码]
+    F --> G[备份旧的 my.ini 配置]
+    G --> H[根据位置和编码生成新的 my.ini 配置]
+    H --> I[执行 mysqld --initialize-insecure 初始化 data 目录]
+    I --> J[执行 mysqld --install 注册 Mysql 服务]
+    J --> K[执行 net start mysql 启动 Mysql 服务]
+    K --> L[用户交互：输入 root 用户密码]
+    L --> M[执行 mysqladmin -u root password 设置 root 密码]
+```
+
+1. 检查 Mysql 服务是否已注册，若已注册不执行任何动作
+2. 检查 `data` 目录是否为空，若不为空则仅重新注册；若为空则进入初始化流程
+3. 用户交互：要求选择【数据库编码】
+4. 备份旧的 `my.ini` 配置
+5. 根据【脚本所在位置】和【数据库编码】，利用 `my.tpl.ini` 配置模板生成新的 `my.ini` 配置
+6. 执行 `mysqld --initialize-insecure` 命令以无密码方式初始化 `data` 目录
+7. 执行 `mysqld --install` 命令注册 Mysql 服务
+8. 执行 `net start mysql` 命令启动 Mysql 服务
+9. 用户交互：要求输入 root 用户【密码】
+10. 执行 `mysqladmin -u root password ${密码}` 设置 root 密码
 
 
 
