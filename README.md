@@ -78,15 +78,14 @@ flowchart TD
     A[检查 Mysql 服务是否已注册] -->|已注册| B[不执行任何动作]
     A -->|未注册| C[检查 data 目录是否为空]
     C -->|不为空| D[重新注册 Mysql 服务]
-    C -->|为空| E[初始化流程]
+    C -->|为空| E[初始化 Mysql]
     E --> F[用户交互：选择数据库编码]
     F --> G[备份旧的 my.ini 配置]
-    G --> H[根据位置和编码生成新的 my.ini 配置]
-    H --> I[执行 mysqld --initialize-insecure 初始化 data 目录]
-    I --> J[执行 mysqld --install 注册 Mysql 服务]
-    J --> K[执行 net start mysql 启动 Mysql 服务]
-    K --> L[用户交互：输入 root 用户密码]
-    L --> M[执行 mysqladmin -u root password 设置 root 密码]
+    G --> H[路径 + 编码 => 新的 my.ini 配置]
+    H --> I[使用无密码命令初始化 data 目录]
+    I --> J[注册并启动 Mysql 服务]
+    J --> K[用户交互：输入 root 用户密码]
+    K --> L[使用超管命令设置 root 密码]
 ```
 
 1. 检查 Mysql 服务是否已注册，若已注册不执行任何动作
