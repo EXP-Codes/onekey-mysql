@@ -115,3 +115,34 @@ flowchart TD
 11. 随后任意终端或客户端，即可登录 Mysql
 
 [](./imgs/05.jpg)
+
+
+
+
+## 0x40 其他过程记录
+
+### 0x41 初始化没有打印 root 密码
+
+假如不使用无密码方式 `mysqld --initialize-insecure` 初始化数据库，而是使用 `mysqld --initialize` 初始化，会为 root 用户生成一个随机密码。
+
+但如果在初始化时没有使用 `--console` 参数输出到控制台，很多同学就因为不知道密码而无法登录。
+
+此时可以在 `data/{主机名}.err` 日志文件中查找关键字 `A temporary password` 得到初始密码:
+
+[](./imgs/06.jpg)
+
+
+### 0x42 初始化后本地连接无法通过权限检查
+
+我在刚开始做这 4 个脚本的时候发现，初始化后无论如何也无法登录进去，不管有密码还是没密码初始化，甚至 mysqladmin 超管也无法连接，一直报错 `ERROR 1130` （权限检查不通过）:
+
+[](./imgs/07.jpg)
+
+查了 2 天才发现原因是我把用于 docker 的 mysql 配置项复制到 my.ini 了：
+
+```ini
+skip-host-cache     ; 禁用主机 DNS 缓存，解决某些 DNS 解析问题
+skip-name-resolve   ; 禁用 DNS 解析，只使用 IP 地址进行权限检查
+```
+
+这两个配置项在 docker 环境是正常的，但是到了物理机就会出问题，删除后恢复正常。
