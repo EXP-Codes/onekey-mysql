@@ -80,7 +80,7 @@ flowchart TD
     C -->|不为空| D[重新注册 Mysql 服务]
     C -->|为空| E[初始化 Mysql]
     E --> F[用户交互：选择数据库编码]
-    F --> G[备份旧的 my.ini 配置]
+    F --> G[自动备份旧的 my.ini 配置]
     G --> H[路径 + 编码 => 新的 my.ini 配置]
     H --> I[使用无密码命令初始化 data 目录]
     I --> J[注册并启动 Mysql 服务]
@@ -89,9 +89,20 @@ flowchart TD
 ```
 
 1. 检查 Mysql 服务是否已注册，若已注册不执行任何动作
+
+[](./imgs/01.jpg)
+
 2. 检查 `data` 目录是否为空，若不为空则仅重新注册；若为空则进入初始化流程
+
+[](./imgs/02.jpg)
+
+
 3. 用户交互：要求选择【数据库编码】
-4. 备份旧的 `my.ini` 配置
+
+[](./imgs/03.jpg)
+
+
+4. 自动备份旧的 `my.ini` 配置
 5. 根据【脚本所在位置】和【数据库编码】，利用 `my.tpl.ini` 配置模板生成新的 `my.ini` 配置
 6. 执行 `mysqld --initialize-insecure` 命令以无密码方式初始化 `data` 目录
 7. 执行 `mysqld --install` 命令注册 Mysql 服务
@@ -99,5 +110,8 @@ flowchart TD
 9. 用户交互：要求输入 root 用户【密码】
 10. 执行 `mysqladmin -u root password ${密码}` 设置 root 密码
 
+[](./imgs/04.jpg)
 
+11. 随后任意终端或客户端，即可登录 Mysql
 
+[](./imgs/05.jpg)
