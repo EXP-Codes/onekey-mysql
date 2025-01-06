@@ -1,7 +1,7 @@
 @echo off
 
 :: 获取 Mysql 服务名
-set /p SVC_NAME=<_svcname
+set /p SVC_NAME=<"%MYSQL_DIR%\_svcname"
 
 :: 卸载 Mysql 注册的服务
 echo Removing %SVC_NAME% service...
