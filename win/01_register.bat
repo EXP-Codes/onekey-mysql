@@ -6,7 +6,7 @@ set "MYSQL_DIR=%~dp0"
 set "MYSQL_DIR=%MYSQL_DIR:~0,-1%"
 
 :: 获取 Mysql 服务名
-set /p SVC_NAME=<_svcname
+set /p SVC_NAME=<"%MYSQL_DIR%\_svcname"
 
 
 :: ================================
